@@ -1,4 +1,3 @@
----@diagnostic disable: param-type-mismatch, inject-field
 --[[
     GPS - GameWindowPieces Module
     Makes the Main Window and parts inside the Main Window.
@@ -100,6 +99,9 @@ function WindowToggleGPS()
     local startX, startY = gpsCalculate:GetPosition()
     startY = startY + buttonHeight
 
+    -- Registry for metadata
+    local registry = {}
+
     for i, entry in ipairs(_G.myUniqueIcons) do
       local rowIndex = (i - 1) % iconsPerColumn
       local colIndex = math.floor((i - 1) / iconsPerColumn)
@@ -141,9 +143,11 @@ function WindowToggleGPS()
       mainWindow:SetSize(startX + colIndex * 2 * columnWidth, startY + rowIndex * 2 * rowHeight)
       mainWindow:SetPosition((Turbine.UI.Display.GetWidth() - mainWindow:GetWidth()) - 64, 0)
 
-      -- Metadata
-      cb.categoryId = entry.categoryId
-      cb.description = entry.description
+      -- Store metadata externally
+      registry[cb] = {
+        categoryId = entry.categoryId,
+        description = entry.description,
+      }
 
       -- Selection logic
       cb.CheckedChanged = function(sender, args)
@@ -156,9 +160,10 @@ function WindowToggleGPS()
           end
 
           -- Update global selection
-          _G.selectedCategoryId = sender.categoryId
+          local tag = registry[sender]
+          _G.selectedCategoryId = tag.categoryId
 
-          local message = "Selected: " .. sender.description .. " (Category " .. sender.categoryId .. ")"
+          local message = "Selected: " .. tag.description .. " (Category " .. tag.categoryId .. ")"
           _G.MessagesGeneric(message)
         else
           _G.selectedCategoryId = 0
@@ -172,10 +177,11 @@ function WindowToggleGPS()
 
       -- Hover highlight
       row.MouseEnter = function()
-        row:SetBackColor(Turbine.UI.Color(0.2, 0.2, 0.4))
+        row:SetBackColor(Turbine.UI.Color(1, 0.2, 0.2, 0.4))
       end
 
       row.MouseLeave = function()
+        ---@diagnostic disable-next-line: param-type-mismatch
         row:SetBackColor(nil)
       end
 
@@ -223,6 +229,13 @@ function WindowToggleGPS()
     waypointButton:SetVisible(true)
 
     waypointQuickslot:SetPosition(waypointButton:GetPosition())
+    if _G.allPluginsCheck then
+      waypointButton:SetVisible(true)
+      waypointQuickslot:SetVisible(true)
+    else
+      waypointButton:SetVisible(false)
+      waypointQuickslot:SetVisible(false)
+    end
 
     ShowMainWindow()
     _G.allPluginsCheck = CheckPlugin(plugins)
