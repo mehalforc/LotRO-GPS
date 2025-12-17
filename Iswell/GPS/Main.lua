@@ -29,26 +29,21 @@ import("Iswell.GPS.Functions.Messages")
 import("Iswell.GPS.MapData.OutsideMapPoints")
 import("Iswell.GPS.MapData.CategoryDescription")
 
--- Set the player's current locale
-_G.locale = Turbine.Engine.GetLocale()
+-- Detect game locale
+local locale = Turbine.Engine.GetLocale()
 
--- Set up the GPS alias based on locale using a table lookup
+-- Table of GPS aliases by locale
 local actions = {
-  en = function()
-    return "/loc"
-  end,
-  de = function()
-    return "/pos"
-  end,
-  fr = function()
-    return "/emp"
-  end,
+  en = "/loc",
+  de = "/pos",
+  fr = "/emp",
 }
-local defaultLocale = function()
-  return "/loc"
-end
-local selectedLocale = actions[locale] or defaultLocale
-_G.aliasLocation = selectedLocale()
+
+-- Fallback if locale not found
+local defaultAlias = "/loc"
+
+-- Select alias
+_G.aliasLocation = actions[locale] or defaultAlias
 _G.aliasWaypoint = "/way help"
 
 -- Initialize plugin on load
@@ -60,7 +55,22 @@ function Initialize()
   _G.plugins = { "Waypoint" }
   _G.allPluginsCheck = CheckPlugin(plugins)
 
-  _G.okLoadMessage = "Welcome to GPS!!!\nPlease select a Category from above..."
+  _G.T = {}
+  local localeMap = {
+    en = "Iswell.GPS.Locales.en",
+    de = "Iswell.GPS.Locales.de",
+    fr = "Iswell.GPS.Locales.fr",
+  }
+
+  -- Pick the module path, default to English
+  local modulePath = localeMap[locale] or localeMap["en"]
+
+  -- Load the translations
+  import(modulePath)
+
+  -- Use the translated string
+  _G.okLoadMessage = _G.T and _G.T.MAIN_WELCOME or "Welcome"
+
   _G.okColor = Turbine.UI.Color.Gold
 
   if _G.allPluginsCheck then
