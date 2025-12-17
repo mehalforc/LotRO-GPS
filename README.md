@@ -1,7 +1,7 @@
 # LotRO-GPS
 Lord of the Rings Online - GPS
 
-This plugin needs the Waypoint plugin: http://www.lotrointerface.com/downloads/download640.
+This plugin needs the Waypoint plugin: https://www.lotrointerface.com/downloads/info640-Waypoint.html.
 
 The datapoints are from the LotRO Companion app: https://github.com/LotroCompanion/lotro-maps-db.
 
