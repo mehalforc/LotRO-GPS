@@ -47,9 +47,10 @@ function _G.MessagesGenericError(message)
   label:SetForeColor(Turbine.UI.Color.Red)
 end
 
--- Generic ERROR message
-function _G.MessagesGenericError(message)
+-- Generic WARNING message
+function _G.MessagesGenericWarning(message)
   message = string.gsub(message, "|", "\n")
   _G.label:SetText("GPS:\n" .. message)
   label:SetForeColor(Turbine.UI.Color.Yellow)
 end
+
