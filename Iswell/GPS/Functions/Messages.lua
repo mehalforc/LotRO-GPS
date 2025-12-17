@@ -53,4 +53,3 @@ function _G.MessagesGenericWarning(message)
   _G.label:SetText("GPS:\n" .. message)
   label:SetForeColor(Turbine.UI.Color.Yellow)
 end
-

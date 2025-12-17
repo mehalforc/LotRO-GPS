@@ -68,7 +68,8 @@ function _G.FindClosest(regionId, categoryId, currentY, currentX)
   local point, y, x, distance, index = FindClosestPoint(_G.outsideMapPoints, currentY, currentX, regionId, categoryId)
   if point then
     distance = distance * 200 -- Convert to in-game distance units
-    local message = string.format("Closest point: %s\nCoordinates: (%.5f, %.5f)\nDistance: ~%.5fm\nLine number: %d", point.description, y, x, distance, index)
+
+    local message = _G.T and string.format(_G.T.CLOSEST_COORDINATES, point.description, y, x, distance, index) or string.format("Closest point: %s\nCoordinates: (%.5f, %.5f)\nDistance: ~%.5fm\nLine number: %d", point.description, y, x, distance, index)
     _G.MessagesGeneric(message)
 
     local playerNS = "n"
@@ -86,10 +87,10 @@ function _G.FindClosest(regionId, categoryId, currentY, currentX)
     _G.waypointQuickslot:SetShortcut(_G.waypointShortcut)
   else
     if categoryId ~= nil and categoryId ~= 0 then
-      local message = "No matching points found for Category: " .. tostring(categoryId) .. ", in Region: " .. tostring(regionId)
+      local message = _G.T and string.format(_G.T.NO_POINTS_MATCHING, tostring(categoryId), tostring(regionId)) or string.format("No matching points found for Category: %s, in Region: %s", tostring(categoryId), tostring(regionId))
       _G.MessagesGenericError(message)
     else
-      local message = "Please select a Category!"
+      local message = _G.T and _G.T.SELECT_CATEGORY or "Please select a Category!"
       _G.MessagesGenericError(message)
     end
   end

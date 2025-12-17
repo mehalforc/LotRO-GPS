@@ -13,7 +13,6 @@ import("Turbine.UI.Lotro")
 import("Iswell.GPS.Functions.CommonFunctions")
 import("Iswell.GPS.Functions.LocationInfo")
 import("Iswell.GPS.Functions.FindClosestPoint")
--- import("Iswell.GPS.Functions.CheckboxImages")
 import("Iswell.GPS.MapData.CategoryDescription")
 import("Iswell.GPS.Functions.Messages")
 
@@ -163,11 +162,12 @@ function WindowToggleGPS()
           local tag = registry[sender]
           _G.selectedCategoryId = tag.categoryId
 
-          local message = "Selected: " .. tag.description .. " (Category " .. tag.categoryId .. ")"
+          local message = _G.T and string.format(_G.T.SELECTED_CATEGORY, tag.description, tag.categoryId) or string.format("Selected: %s (Category %d)", tag.description, tag.categoryId)
           _G.MessagesGeneric(message)
         else
           _G.selectedCategoryId = 0
-          _G.MessagesGenericError("No Category Selected...")
+          local message = _G.T and _G.T.NO_CATEGORY_SELECTED or "No Category Selected..."
+          _G.MessagesGenericError(message)
         end
       end
 
