@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<Plugin>
+  <Information>
+    <Name>GPS</Name>
+    <Author>Iswell</Author>
+    <Version>0.1-46.0.1</Version>
+    <Description>Plugin that uses the Waypoint plugin... And datapoints from the LotRO Companion app: (https://github.com/LotroCompanion/lotro-maps-db)</Description>
+    <Image>Iswell/GPS/Icons/GPS-Icon.tga</Image>
+  </Information>
+  <Package>Iswell.GPS.Main</Package>
+  <Configuration Apartment="GPS" />
+</Plugin>
