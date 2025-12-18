@@ -51,3 +51,24 @@ function _G.GetUniqueCategoryIds()
 
   return output
 end
+
+function _G.resolveDescription(desc)
+  local pointName = split(desc, "|")
+  local main = _G.pointsT[tonumber(pointName[1])] or pointName[1]
+  local subs = {}
+  for _, id in ipairs(split(pointName[2], "/")) do
+    table.insert(subs, _G.pointsT[tonumber(id)] or id)
+  end
+  return main, subs
+end
+
+function _G.split(inputstr, sep)
+  if sep == nil then
+    sep = "%s"
+  end
+  local t = {}
+  for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+    table.insert(t, str)
+  end
+  return t
+end

@@ -71,7 +71,7 @@ function _G.SetMyLocation()
         end
 
         if pinside == "Inside" then
-          local message = "You are inside! Go outside and try again..."
+          local message = _G.T and _G.T.GO_OUTSIDE or "You are inside! Go outside and try again..."
           _G.MessagesGenericError(message)
         end
       end

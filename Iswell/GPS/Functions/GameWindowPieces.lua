@@ -225,7 +225,7 @@ function WindowToggleGPS()
     local buttonX, buttonY = gpsCalculate:GetPosition()
     waypointButton:SetPosition(buttonX + 32, buttonY)
     waypointButton:SetBlendMode(Turbine.UI.BlendMode.AlphaBlend)
-    waypointButton:SetMouseVisible(false) -- must be true to receive clicks
+    waypointButton:SetMouseVisible(false)
     waypointButton:SetVisible(true)
 
     waypointQuickslot:SetPosition(waypointButton:GetPosition())

@@ -69,7 +69,13 @@ function _G.FindClosest(regionId, categoryId, currentY, currentX)
   if point then
     distance = distance * 200 -- Convert to in-game distance units
 
-    local message = _G.T and string.format(_G.T.CLOSEST_COORDINATES, point.description, y, x, distance, index) or string.format("Closest point: %s\nCoordinates: (%.5f, %.5f)\nDistance: ~%.5fm\nLine number: %d", point.description, y, x, distance, index)
+    local main, subs = resolveDescription(point.description)
+    local description = main
+    if #subs > 0 then
+      description = description .. "\nIn: " .. table.concat(subs, "/")
+    end
+
+    local message = _G.T and string.format(_G.T.CLOSEST_COORDINATES, description, y, x, distance, index) or string.format("Closest point: %s\nCoordinates: (%.5f, %.5f)\nDistance: ~%.5fm\nLine number: %d", description, y, x, distance, index)
     _G.MessagesGeneric(message)
 
     local playerNS = "n"
