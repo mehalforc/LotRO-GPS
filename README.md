@@ -5,6 +5,6 @@ This plugin needs the Waypoint plugin: https://www.lotrointerface.com/downloads/
 
 The datapoints are from the LotRO Companion app: https://github.com/LotroCompanion/lotro-maps-db.
 
-(Still in progress)
+Beta 0.1 done... (Still in progress)
 
 This lists a few categories to mark one at a time, to see what the closest point, by category, is from where you are. Then uses the "Waypoint" plugin to direct you to the point. A trunkated list of map points are taken from the "LotRO Companion" app.
