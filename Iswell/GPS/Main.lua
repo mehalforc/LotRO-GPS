@@ -33,7 +33,7 @@ import("Iswell.GPS.MapData.CategoryDescription")
 local locale = Turbine.Engine.GetLocale()
 
 -- Table of GPS aliases by locale
-local actions = {
+local alias = {
   en = "/loc",
   de = "/pos",
   fr = "/emp",
@@ -43,7 +43,7 @@ local actions = {
 local defaultAlias = "/loc"
 
 -- Select alias
-_G.aliasLocation = actions[locale] or defaultAlias
+_G.aliasLocation = alias[locale] or defaultAlias
 _G.aliasWaypoint = "/way help"
 
 -- Initialize plugin on load
@@ -55,21 +55,35 @@ function Initialize()
   _G.plugins = { "Waypoint" }
   _G.allPluginsCheck = CheckPlugin(plugins)
 
-  _G.T = {}
-  local localeMap = {
-    en = "Iswell.GPS.Locales.en",
-    de = "Iswell.GPS.Locales.de",
-    fr = "Iswell.GPS.Locales.fr",
+  -- Loads the required TranslatedMarkers file based on localecategory
+  local localeLabels = {
+    en = "Iswell.GPS.Locales.en.TranslatedMarkers",
+    de = "Iswell.GPS.Locales.de.TranslatedMarkers",
+    fr = "Iswell.GPS.Locales.fr.TranslatedMarkers",
   }
 
-  -- Pick the module path, default to English
-  local modulePath = localeMap[locale] or localeMap["en"]
+  -- Pick the TranslatedMarkers locale, default to English
+  local TranslatedMarkers = localeLabels[locale] or localeLabels["en"]
 
-  -- Load the translations
-  import(modulePath)
+  -- Load the translation for Labels
+  import(TranslatedMarkers)
+
+  -- Loads the required TranslatedGPS file based on localecategory
+  _G.T = {}
+  local localeMap = {
+    en = "Iswell.GPS.Locales.en.TranslatedGPS",
+    de = "Iswell.GPS.Locales.de.TranslatedGPS",
+    fr = "Iswell.GPS.Locales.fr.TranslatedGPS",
+  }
+
+  -- Pick the TranslatedGPS locale, default to English
+  local TranslatedGPS = localeMap[locale] or localeMap["en"]
+
+  -- Load the translation for GPS
+  import(TranslatedGPS)
 
   -- Use the translated string
-  _G.okLoadMessage = _G.T and _G.T.MAIN_WELCOME or "Welcome"
+  _G.okLoadMessage = _G.T and _G.T.MAIN_WELCOME or "Welcome!"
 
   _G.okColor = Turbine.UI.Color.Gold
 
