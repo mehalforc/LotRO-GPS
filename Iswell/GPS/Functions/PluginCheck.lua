@@ -30,6 +30,7 @@ function _G.CheckPlugin(plugins)
     end
 
     if pluginInstalled then
+      Turbine.PluginManager.LoadPlugin(value)
       tmpPlugins = Turbine.PluginManager.GetLoadedPlugins()
       for pluginIndex = 1, #tmpPlugins do
         if tmpPlugins[pluginIndex].Name == value then
@@ -50,3 +51,4 @@ function _G.CheckPlugin(plugins)
 
   return allPluginsRunning
 end
+
