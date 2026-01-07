@@ -17,7 +17,7 @@ To Use: Make sure the Waypoint plugin is installed and enabled.
 
 2. Mark a category with the check box.
 
-3. Press the first icon in the window that is on the left
+3. Press the first icon in the GPS window, that is in the upper left.
 
 4. Press the second icon next to that to bring up Waypoint to find it.
 
