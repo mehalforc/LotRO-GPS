@@ -51,4 +51,3 @@ function _G.CheckPlugin(plugins)
 
   return allPluginsRunning
 end
-
